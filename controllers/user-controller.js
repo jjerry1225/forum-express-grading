@@ -42,9 +42,12 @@ const userController = {
   getUser: (req, res, next) => {
     const userId = req.params.id
     return User.findByPk(userId, {
-      include: [{
-        model: Comment, include: Restaurant
-      }]
+      include: [
+        { model: Comment, include: Restaurant },
+        { model: User, as: 'Followings', attributes: ['id', 'image'] },
+        { model: User, as: 'Followers', attributes: ['id', 'image'] },
+        { model: Restaurant, as: 'FavoritedRestaurants' }
+      ]
     })
       .then(user => {
         if (!user) throw new Error("This User didn't exists!")
@@ -194,7 +197,10 @@ const userController = {
             isFollowed: req.user.Followings.some(f => f.id === user.id)
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
-        res.render('top-users', { users: result })
+
+        // 設計變數userEmail，搭配hbs的條件式，讓使用者無法追蹤或取追自己。
+        const userEmail = req.user.email
+        res.render('top-users', { users: result, userEmail })
       })
       .catch(err => next(err))
   },
