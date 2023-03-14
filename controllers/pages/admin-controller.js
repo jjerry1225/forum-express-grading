@@ -14,24 +14,13 @@ const adminController = {
       .catch(err => next(err))
   },
   postRestaurant: (req, res, next) => {
-    const { name, tel, address, openingHours, description, categoryId } = req.body
-    if (!name) throw new Error('Restaurant name is required!')
+    adminServices.postRestaurant(req, (err, data) => {
+      if (err) return next(err)
 
-    const { file } = req // 這裡是解構賦值，也可以寫成 const file = req.file
-    return imgurFileHandler(file).then(filePath => Restaurant.create({
-      name,
-      tel,
-      address,
-      openingHours,
-      description,
-      image: filePath || null, // 若有上傳圖片則存檔，沒有上傳圖片則為null。
-      categoryId
-    }))
-      .then(() => {
-        req.flash('success_messages', 'restaurant was successfully created')
-        res.redirect('/admin/restaurants')
-      })
-      .catch(err => next(err))
+      req.flash('success_messages', 'restaurant was successfully to update')
+      req.session.createdData = data
+      res.redirect('/admin/restaurants')
+    })
   },
   getRestaurant: (req, res, next) => {
     return Restaurant.findByPk(req.params.id, {

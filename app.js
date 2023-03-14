@@ -21,6 +21,7 @@ app.engine('hbs', handlebars({ extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
 
 app.use(express.urlencoded({ extended: true }))
+app.use(express.json()) // JSON 功能打開，這樣程式才能夠解析 JSON 格式的請求物件
 
 app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false }))
 
