@@ -73,6 +73,7 @@ const restaurantController = {
       include: [{ model: User, as: 'FavoritedUsers' }]
     })
       .then(restaurants => {
+        console.log(restaurants)
         const result = restaurants
           .map(restaurant => ({
             ...restaurant.toJSON(),
@@ -82,6 +83,8 @@ const restaurantController = {
           }))
           .sort((a, b) => b.favoritedCount - a.favoritedCount)
           .slice(0, 10)
+
+        console.log('result:', result)
         res.render('top-restaurants', { restaurants: result })
       })
       .catch(err => next(err))
