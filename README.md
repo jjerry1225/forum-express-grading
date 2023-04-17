@@ -1,6 +1,9 @@
 # 餐廳論壇
 利用node.js與MySQL資料庫打造的餐廳論壇，使用者可以檢視各類餐廳，留下評論，若有喜歡的餐廳，可以按下喜歡，或將餐廳加入自己的最愛。
 
+## 網站頁面
+![restaurantforum-dev ap-northeast-1 elasticbeanstalk com_restaurants](https://user-images.githubusercontent.com/118960946/232370468-ae88fb65-8c93-443d-afcb-cbc41401c65d.png)
+
 ## 功能介紹
 ● 使用者登入：使用者可以透過Email、密碼登入，若是密碼不正確，或是帳號不存在，會跳出提示訊息。
 
